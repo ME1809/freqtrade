@@ -178,8 +178,28 @@ export class FreqtradeClient {
     return this.request("/blacklist");
   }
 
+  addToBlacklist(pairs: string[]): Promise<BlacklistResponse> {
+    return this.request("/blacklist", {
+      method: "POST",
+      body: JSON.stringify({ blacklist: pairs }),
+    });
+  }
+
+  removeFromBlacklist(pairs: string[]): Promise<BlacklistResponse> {
+    const query = pairs.map((p) => `pairs_to_delete=${encodeURIComponent(p)}`).join("&");
+    return this.request(`/blacklist?${query}`, { method: "DELETE" });
+  }
+
+  strategies(): Promise<{ strategies: string[] }> {
+    return this.request("/strategies");
+  }
+
   locks(): Promise<LocksResponse> {
     return this.request("/locks");
+  }
+
+  deleteLock(lockId: number): Promise<LocksResponse> {
+    return this.request(`/locks/${lockId}`, { method: "DELETE" });
   }
 
   sysinfo(): Promise<SysInfoResponse> {
