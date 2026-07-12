@@ -5,6 +5,7 @@ import { usePoll } from "../../lib/usePoll";
 import { Sidebar } from "../../components/Sidebar";
 import { Topbar } from "../../components/Topbar";
 import { IconClose } from "../../components/icons";
+import { ErrorBoundary } from "../../components/ErrorBoundary";
 
 const titles: Record<string, string> = {
   "/dashboard": "Übersicht",
@@ -56,7 +57,9 @@ export function DashboardLayout() {
       <div className="flex min-w-0 flex-1 flex-col">
         <Topbar title={title} state={config?.state} onMenuClick={() => setMobileOpen(true)} />
         <main className="flex-1 overflow-y-auto px-4 py-6 md:px-8 md:py-8">
-          <Outlet context={{ config }} />
+          <ErrorBoundary key={location.pathname}>
+            <Outlet context={{ config }} />
+          </ErrorBoundary>
         </main>
       </div>
     </div>

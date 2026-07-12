@@ -18,7 +18,7 @@ export function Performance() {
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <StatCard
           label="Profit-Faktor"
-          value={profit ? profit.profit_factor.toFixed(2) : "…"}
+          value={profit?.profit_factor != null ? profit.profit_factor.toFixed(2) : "–"}
           sub="Gewinne / Verluste"
         />
         <StatCard
@@ -29,13 +29,13 @@ export function Performance() {
         />
         <StatCard
           label="Bester Pair"
-          value={profit?.best_pair ?? "–"}
-          sub={profit ? formatPercent(profit.best_pair_profit_ratio) : undefined}
+          value={profit?.best_pair || "–"}
+          sub={profit?.best_pair ? formatPercent(profit.best_pair_profit_ratio) : undefined}
           trend="up"
         />
         <StatCard
           label="Ø Haltedauer"
-          value={profit?.avg_duration ?? "–"}
+          value={profit?.avg_duration || "–"}
         />
       </div>
 
